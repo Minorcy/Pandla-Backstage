@@ -30,8 +30,7 @@ import Layout from '@/layout'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-export const constantRoutes = [
-  {
+export const constantRoutes = [{
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
@@ -46,126 +45,301 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/home',
     children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
+      path: 'home',
+      name: 'Home',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: {
+        title: '首页',
+        icon: 'dashboard',
+        breadcrumb: false
+      }
     }]
   },
 
   {
-    path: '/example',
+    path: '/system',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+    redirect: '/system/user',
+    name: 'System',
+    meta: {
+      title: '系统功能',
+      icon: 'example'
+    },
+    children: [{
+        path: 'user',
+        name: 'User',
+        component: () => import('@/views/system/user'),
+        meta: {
+          title: '用户管理',
+          icon: 'table'
+        }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
+        path: 'role',
+        name: 'Role',
+        component: () => import('@/views/system/role'),
+        meta: {
+          title: '角色管理',
+          icon: 'table'
+        }
+      },
       {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        path: 'authority',
+        name: 'Authority',
+        component: () => import('@/views/system/authority'),
+        meta: {
+          title: '权限管理',
+          icon: 'table'
+        }
+      },
+      {
+        path: 'dictionary',
+        name: 'Dictionary',
+        component: () => import('@/views/system/dictionary'),
+        meta: {
+          title: '字典管理',
+          icon: 'table'
+        }
+      },
+      {
+        path: 'token',
+        name: 'Token',
+        component: () => import('@/views/system/token'),
+        meta: {
+          title: 'token管理',
+          icon: 'table'
+        }
+      },
+      {
+        path: 'transfer',
+        name: 'Transfer',
+        component: () => import('@/views/system/transfer'),
+        meta: {
+          title: '转账管理',
+          icon: 'table'
+        }
       }
     ]
   },
 
   {
-    path: '/nested',
+    path: '/platform',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
+    redirect: '/platform/user',
+    name: 'platform',
     meta: {
-      title: 'Nested',
+      title: '平台管理',
+      icon: 'example'
+    },
+    children: [{
+      path: 'user',
+      name: 'User',
+      component: () => import('@/views/platform/user'),
+      meta: {
+        title: '用户列表',
+        icon: 'form'
+      }
+    }, {
+      path: 'log',
+      name: 'Log',
+      component: () => import('@/views/platform/log'),
+      meta: {
+        title: '日志列表',
+        icon: 'form'
+      }
+    }, {
+      path: 'pan',
+      name: 'Pan',
+      component: () => import('@/views/platform/pan'),
+      meta: {
+        title: '用户pan',
+        icon: 'form'
+      }
+    }, {
+      path: 'force',
+      name: 'Force',
+      component: () => import('@/views/platform/force'),
+      meta: {
+        title: '用户原力',
+        icon: 'form'
+      }
+    }, {
+      path: 'report',
+      name: 'Report',
+      component: () => import('@/views/platform/report'),
+      meta: {
+        title: '举报处理',
+        icon: 'form'
+      }
+    }, {
+      path: 'invited',
+      name: 'Invited',
+      component: () => import('@/views/platform/invited'),
+      meta: {
+        title: '邀请记录',
+        icon: 'form'
+      }
+    }]
+  },
+
+  {
+    path: '/internal',
+    component: Layout,
+    redirect: '/internal/announcement',
+    name: 'announcement',
+    meta: {
+      title: '内容管理',
       icon: 'nested'
     },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
+    children: [{
+        path: 'announcement',
+        component: () => import('@/views/internal/announcement'), // Parent router-view
+        name: 'Announcement',
+        meta: {
+          title: '公告列表',
+          icon: 'form'
+        }
       },
       {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
-      }
+        path: 'pan-task',
+        component: () => import('@/views/internal/pan-task'), // Parent router-view
+        name: 'Pan Task',
+        meta: {
+          title: 'pan任务',
+          icon: 'form'
+        }
+      },
+      {
+        path: 'force-task',
+        component: () => import('@/views/internal/force-task'), // Parent router-view
+        name: 'Force Task',
+        meta: {
+          title: '原力任务',
+          icon: 'form'
+        }
+      },
+      {
+        path: 'planet-convention',
+        component: () => import('@/views/internal/planet-convention'), // Parent router-view
+        name: 'Planet Convention',
+        meta: {
+          title: '星球公约',
+          icon: 'form'
+        }
+      },
+      {
+        path: 'welfare',
+        component: () => import('@/views/internal/welfare'), // Parent router-view
+        name: 'Welfare',
+        meta: {
+          title: '公益活动',
+          icon: 'form'
+        }
+      },
+      {
+        path: 'official-push',
+        component: () => import('@/views/internal/official-push'), // Parent router-view
+        name: 'Official Push',
+        meta: {
+          title: '官方消息推送',
+          icon: 'form'
+        }
+      },
     ]
   },
-
+  {
+    path: '/organization',
+    component: Layout,
+    redirect: '/organization/publication',
+    name: 'organization',
+    meta: {
+      title: '组织管理',
+      icon: 'nested'
+    },
+    children: [{
+        path: 'publication',
+        component: () => import('@/views/organization/publication'), // Parent router-view
+        name: 'Publication',
+        meta: {
+          title: '公益组织',
+          icon: 'form'
+        }
+      },
+      {
+        path: 'bar',
+        component: () => import('@/views/organization/bar'), // Parent router-view
+        name: 'Bar',
+        meta: {
+          title: '酒吧管理',
+          icon: 'form'
+        }
+      },
+      {
+        path: 'ixx',
+        component: () => import('@/views/organization/ixx'), // Parent router-view
+        name: 'Ixx',
+        meta: {
+          title: 'ixx',
+          icon: 'form'
+        }
+      },
+      {
+        path: 'fund-pool',
+        component: () => import('@/views/organization/fund-pool'), // Parent router-view
+        name: 'Fund Pool',
+        meta: {
+          title: '公益基金',
+          icon: 'form'
+        }
+      },
+    ]
+  },
+  {
+    path: '/advertising',
+    component: Layout,
+    redirect: '/advertising/index',
+    name: 'Advertising',
+    meta: {
+      title: '广告管理',
+      icon: 'nested'
+    },
+    children: [{
+      path: 'index',
+      component: () => import('@/views/advertising/index'), // Parent router-view
+      name: 'Index',
+      meta: {
+        title: '广告内容',
+        icon: 'form'
+      }
+    }]
+  },
   {
     path: 'external-link',
     component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
+    children: [{
+      path: 'http://pandla.io/',
+      meta: {
+        title: "官网链接",
+        icon: 'link'
       }
-    ]
+    }]
   },
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  {
+    path: '*',
+    redirect: '/404',
+    hidden: true
+  }
 ]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
+  scrollBehavior: () => ({
+    y: 0
+  }),
   routes: constantRoutes
 })
 

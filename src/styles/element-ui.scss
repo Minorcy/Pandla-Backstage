@@ -47,3 +47,6 @@
 .el-range-separator {
   box-sizing: content-box;
 }
+body .el-table th.gutter {
+  display: table-cell!important;
+}
