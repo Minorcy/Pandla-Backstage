@@ -66,7 +66,7 @@
       <!-- 在el-dialog中进行嵌套el-form实现弹出表格的效果 -->
       <el-form :model="form">
         <el-form-item label="id" :label-width="formLabelWidth">
-          <el-input v-model="form.id" auto-complete="off"></el-input>
+          <el-input v-model="form.id" auto-complete="off" :disabled="add"></el-input>
         </el-form-item>
         <el-form-item label="账号" :label-width="formLabelWidth">
           <el-input v-model="form.account" auto-complete="off"></el-input>
@@ -143,6 +143,7 @@ export default {
       });
     },
     handleEdit(index, row) {
+      this.add = false
       getRoleList().then(response => {
         this.roleList = response.data;
       });
@@ -152,13 +153,12 @@ export default {
     },
     handleDelete(index, row) {
       this.$confirm("永久删除该数据, 是否继续?", "提示", {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
         type: "warning"
       })
         .then(() => {
-          console.log(11)
-          deleteUser(id).then(response => {
+          deleteUser(row.id).then(response => {
             console.log(response);
             // 移除对应索引位置的数据，可以对row进行设置向后台请求删除数据
             this.list.splice(index, 1);
@@ -174,15 +174,6 @@ export default {
             message: "已取消删除"
           });
         });
-      // this.$confirm('此操作将任务状态改为删除状态, 是否继续?', '提示', {
-      //       confirmButtonText: '确定',
-      //       cancelButtonText: '取消',
-      //       type: 'warning'
-      //     }).then(() => {
-      //       console.log(11)
-      //     }).catch(() => {
-      //       //几点取消的提示
-      //     });
     },
     update() {
       var userDate = JSON.parse(JSON.stringify(this.form));
@@ -190,11 +181,13 @@ export default {
 
       if (this.add) {
         addUser(userDate).then(response => {
-          this.list.push(this.form);
+          // console.log(response)
+          // this.list.push(this.form);
+          this.fetchData()
         });
       } else {
         updateUser(userDate).then(response => {
-          this.list[this.currentIndex] = this.form;
+          this.list[this.currentIndex] = userDate;
         });
       }
       this.add = false;

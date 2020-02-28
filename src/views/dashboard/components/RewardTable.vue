@@ -1,46 +1,41 @@
   <template>
-    <el-table
-      :data="tableData"
-      style="width: 100%">
-      <el-table-column
-        prop="date"
-        label="姓名"
-        width="180">
+   <el-table
+      v-loading="!rewardData"
+      :data="rewardData.list"
+      element-loading-text="Loading"
+      highlight-current-row
+    >
+      <el-table-column align="center" label="ID" width="95">
+        <template slot-scope="scope">{{ scope.row.id }}</template>
       </el-table-column>
-      <el-table-column
-        prop="name"
-        label="数量"
-        width="180">
+      <el-table-column label="账号"  align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.account }}</span>
+        </template>
       </el-table-column>
-      <el-table-column
-        prop="address"
-        label="时间">
+      <el-table-column label="名字" align="center">
+        <template slot-scope="scope">
+          <span>{{ scope.row.name }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="奖励数量" align="center">
+       <template slot-scope="scope">
+          <span>{{ scope.row.number }}</span>
+        </template>
       </el-table-column>
     </el-table>
   </template>
 
   <script>
     export default {
-      data() {
-        return {
-          tableData: [{
-            date: '2016-05-02',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-04',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1517 弄'
-          }, {
-            date: '2016-05-01',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1519 弄'
-          }, {
-            date: '2016-05-03',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1516 弄'
-          }]
+      props:{
+        rewardData:{
+          tpye:Object
         }
-      }
+      },
+      mounted() {
+        console.log(this.rewardData)
+      },
     }
   </script>

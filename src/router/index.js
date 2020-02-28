@@ -134,8 +134,8 @@ export const constantRoutes = [{
       icon: 'example'
     },
     children: [{
-      path: 'user',
-      name: 'User',
+      path: 'users',
+      name: 'Users',
       component: () => import('@/views/platform/user'),
       meta: {
         title: '用户列表',

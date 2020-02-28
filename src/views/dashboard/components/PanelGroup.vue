@@ -9,7 +9,7 @@
           <div class="card-panel-text">
             总用户数
           </div>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="homeData.user_count" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -22,7 +22,21 @@
           <div class="card-panel-text">
             新增用户
           </div>
-          <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="homeData.reg_count" :duration="3000" class="card-panel-num" />
+        </div>
+      </div>
+    </el-col>
+    
+    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+      <div class="card-panel">
+        <div class="card-panel-icon-wrapper icon-shopping">
+          <svg-icon icon-class="shopping" class-name="card-panel-icon" />
+        </div>
+        <div class="card-panel-description">
+          <div class="card-panel-text">
+            在线用户
+          </div>
+          <count-to :start-val="0" :end-val="homeData.online_user" :duration="3600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -35,20 +49,7 @@
           <div class="card-panel-text">
             pan数量
           </div>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num" />
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel">
-        <div class="card-panel-icon-wrapper icon-shopping">
-          <svg-icon icon-class="shopping" class-name="card-panel-icon" />
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">
-            活跃用户
-          </div>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="homeData.pan_count" :duration="3200" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -62,10 +63,13 @@ export default {
   components: {
     CountTo
   },
-  methods: {
-    handleSetLineChartData(type) {
-      this.$emit('handleSetLineChartData', type)
+  props:{
+    homeData:{
+      type:Object
     }
+  },
+  methods: {
+   
   }
 }
 </script>

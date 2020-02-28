@@ -3,24 +3,24 @@
 </template>
 
 <script>
-import echarts from 'echarts'
-require('echarts/theme/macarons') // echarts theme
-import resize from './mixins/resize'
+import echarts from "echarts";
+require("echarts/theme/macarons"); // echarts theme
+import resize from "./mixins/resize";
 
 export default {
   mixins: [resize],
   props: {
     className: {
       type: String,
-      default: 'chart'
+      default: "chart"
     },
     width: {
       type: String,
-      default: '100%'
+      default: "100%"
     },
     height: {
       type: String,
-      default: '350px'
+      default: "350px"
     },
     autoResize: {
       type: Boolean,
@@ -34,53 +34,83 @@ export default {
   data() {
     return {
       chart: null
-    }
+    };
   },
   watch: {
     chartData: {
       deep: true,
       handler(val) {
-        this.setOptions(val)
+        this.chart.hideLoading();
+        this.chart.setOption({
+          xAxis: {
+            data: val.date,
+            boundaryGap: false,
+            axisTick: {
+              show: false
+            }
+          },
+           yAxis: {
+          axisTick: {
+            show: false
+          }
+        },
+          series: [
+            {
+              name: "pan",
+              itemStyle: {
+                normal: {
+                  color: "#FF005A",
+                  lineStyle: {
+                    color: "#FF005A",
+                    width: 2
+                  }
+                }
+              },
+              smooth: true,
+              data: val.number,
+              type: "line",
+              animationDuration: 2800,
+              animationEasing: "cubicInOut"
+            }
+          ]
+        });
       }
     }
   },
   mounted() {
     this.$nextTick(() => {
-      this.initChart()
-    })
+      this.initChart();
+    });
   },
   beforeDestroy() {
     if (!this.chart) {
-      return
+      return;
     }
-    this.chart.dispose()
-    this.chart = null
+    this.chart.dispose();
+    this.chart = null;
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(this.$el, 'macarons')
-      this.setOptions(this.chartData)
+      this.chart = echarts.init(this.$el, "macarons");
+      this.chart.showLoading();
+      this.setOptions(this.chartData);
     },
-    setOptions({ expectedData } = {}) {
+    setOptions({ number, date } = {}) {
       this.chart.setOption({
         xAxis: {
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          boundaryGap: false,
-          axisTick: {
-            show: false
-          }
+          data: []
         },
         grid: {
-          left: 10,
-          right: 10,
+          left: 20,
+          right: 40,
           bottom: 20,
           top: 30,
           containLabel: true
         },
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'cross'
+            type: "cross"
           },
           padding: [5, 10]
         },
@@ -90,26 +120,29 @@ export default {
           }
         },
         legend: {
-          data: ['expected']
+          data: ["pan"]
         },
-        series: [{
-          name: 'expected', itemStyle: {
-            normal: {
-              color: '#FF005A',
-              lineStyle: {
-                color: '#FF005A',
-                width: 2
-              }
-            }
-          },
-          smooth: true,
-          type: 'line',
-          data: expectedData,
-          animationDuration: 2800,
-          animationEasing: 'cubicInOut'
-        }]
-      })
+        series: [
+          {
+            name: "pan",
+              itemStyle: {
+                normal: {
+                  color: "#FF005A",
+                  lineStyle: {
+                    color: "#FF005A",
+                    width: 2
+                  }
+                }
+              },
+              smooth: true,
+              data: [],
+              type: "bar",
+              animationDuration: 2800,
+              animationEasing: "cubicInOut"
+          }
+        ]
+      });
     }
   }
-}
+};
 </script>

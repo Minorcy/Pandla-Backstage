@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-editor-container">
-    <panel-group @handleSetLineChartData="handleSetLineChartData" />
+    <panel-group :homeData="homeData" />
 
     <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
       <line-chart :chart-data="lineChartData" />
@@ -14,7 +14,36 @@
         :xl="{span: 12}"
         style="padding-right:8px;margin-bottom:30px;"
       >
-        <Reward-table />
+        <el-table
+          :data="rewardData"
+          element-loading-text="Loading"
+          highlight-current-row
+          :summary-method="getSummaries"
+          show-summary
+          height="400"
+        >
+          <el-table-column align="center" label="ID" width="95">
+            <template slot-scope="scope">
+              <span>{{ scope.row.id }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="账号" align="center">
+            <template slot-scope="scope">
+              <span>{{ scope.row.account }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="名字" align="center">
+            <template slot-scope="scope">
+              <span>{{ scope.row.name }}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="奖励数量" align="center">
+            <template slot-scope="scope">
+              <span>{{ scope.row.number }}</span>
+            </template>
+          </el-table-column>
+        </el-table>
       </el-col>
       <el-col
         :xs="{span: 24}"
@@ -24,7 +53,34 @@
         :xl="{span: 12}"
         style="padding-right:8px;margin-bottom:30px;"
       >
-        <Node-table />
+        <el-table
+          :data="nodeData"
+          element-loading-text="Loading"
+          highlight-current-row
+          height="400"
+        >
+          <el-table-column align="center" label="ID" width="95">
+            <template slot-scope="scope">
+              <span>{{ scope.row.id }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="账号" align="center">
+            <template slot-scope="scope">
+              <span>{{ scope.row.account }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="名字" align="center">
+            <template slot-scope="scope">
+              <span>{{ scope.row.name }}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column label="邀请码" align="center">
+            <template slot-scope="scope">
+              <span>{{ scope.row.invite_code }}</span>
+            </template>
+          </el-table-column>
+        </el-table>
       </el-col>
     </el-row>
   </div>
@@ -36,24 +92,12 @@ import LineChart from "./components/LineChart";
 import RewardTable from "./components/RewardTable";
 import NodeTable from "./components/NodeTable";
 
-const lineChartData = {
-  newVisitis: {
-    expectedData: [100, 120, 161, 134, 105, 160, 165],
-    actualData: [120, 82, 91, 154, 162, 140, 145]
-  },
-  messages: {
-    expectedData: [200, 192, 120, 144, 160, 130, 140],
-    actualData: [180, 160, 151, 106, 145, 150, 130]
-  },
-  purchases: {
-    expectedData: [80, 100, 121, 104, 105, 90, 100],
-    actualData: [120, 90, 100, 138, 142, 130, 130]
-  },
-  shoppings: {
-    expectedData: [130, 140, 141, 142, 145, 150, 160],
-    actualData: [120, 82, 91, 154, 162, 140, 130]
-  }
-};
+import {
+  getHomeData,
+  getlineChartData,
+  getRewardData,
+  getNodeData
+} from "@/api/dashboard";
 
 export default {
   name: "DashboardAdmin",
@@ -65,12 +109,80 @@ export default {
   },
   data() {
     return {
-      lineChartData: lineChartData.newVisitis
+      homeData: null,
+      lineChartData: {
+        number: '',
+        date: ''
+      },
+      nodeData: null,
+      rewardData: null
     };
   },
+  created() {
+    this.getHomeData();
+  },
   methods: {
-    handleSetLineChartData(type) {
-      this.lineChartData = lineChartData[type];
+    getHomeData() {
+      getHomeData().then(response => {
+        this.homeData = response.data;
+      });
+      getRewardData().then(response => {
+        this.rewardData = response.data.list;
+        // console.log(this.rewardData);
+      });
+      getNodeData().then(response => {
+        // console.log(response.data);
+        this.nodeData = response.data;
+      });
+      getlineChartData().then(response => {
+        var arr = Object.values(response.data);
+        var arr1 = [];
+        var arr2 = [];
+        for (var i = 0; i < arr.length; i++) {
+          arr1.push(arr[i].number);
+          arr2.push(arr[i].dat);
+        }
+        this.lineChartData = {
+            number: arr1,
+            date: arr2
+        };
+     
+      });
+    },
+    getSummaries(param) {
+      const { columns, data } = param;
+      const sums = [];
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = "总计";
+          return;
+        }
+        if (index === 1) {
+          sums[index] = "/";
+          return;
+        }
+        if (index === 2) {
+          sums[index] = "/";
+          return;
+        }
+        const values = data.map(item => Number(item.number));
+       
+        if (!values.every(value => isNaN(value))) {
+          sums[index] = values.reduce((prev, curr) => {
+            const value = Number(curr);
+            if (!isNaN(value)) {
+              return prev + curr;
+            } else {
+              return prev;
+            }
+          }, 0);
+          sums[index] += " ";
+        } else {
+          sums[index] = "";
+        }
+      });
+
+      return sums;
     }
   }
 };
@@ -94,6 +206,10 @@ export default {
     padding: 16px 16px 0;
     margin-bottom: 32px;
   }
+}
+
+.el-table{
+overflow:visible !important;
 }
 
 @media (max-width: 1024px) {
