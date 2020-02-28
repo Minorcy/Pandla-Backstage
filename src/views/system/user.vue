@@ -39,13 +39,6 @@
       <el-table-column label="角色" width="110" align="center">
         <template slot-scope="scope">
           <el-tag size="medium">{{ scope.row.roleId }}</el-tag>
-          <!-- <el-popover trigger="hover" placement="top">
-          <p>姓名: {{ scope.row.name }}</p>
-          <p>住址: {{ scope.row.account }}</p>
-          <div slot="reference" class="name-wrapper"   >
-            <el-tag size="medium" >{{ scope.row.roleId }}</el-tag>
-          </div>
-          </el-popover>-->
         </template>
       </el-table-column>
 
