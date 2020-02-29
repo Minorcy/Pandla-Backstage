@@ -127,7 +127,7 @@ export const constantRoutes = [{
   {
     path: '/platform',
     component: Layout,
-    redirect: '/platform/user',
+    redirect: '/platform/users',
     name: 'platform',
     meta: {
       title: '平台管理',
@@ -136,7 +136,7 @@ export const constantRoutes = [{
     children: [{
       path: 'users',
       name: 'Users',
-      component: () => import('@/views/platform/user'),
+      component: () => import('@/views/platform/users'),
       meta: {
         title: '用户列表',
         icon: 'form'

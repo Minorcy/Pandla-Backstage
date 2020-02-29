@@ -68,10 +68,10 @@ export default {
       this.$message('submit!')
     },
     onCancel() {
-      this.$message({
-        message: 'cancel!',
-        type: 'warning'
-      })
+      // this.$message({
+      //   message: 'cancel!',
+      //   type: 'warning'
+      // })
     }
   }
 }

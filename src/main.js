@@ -25,6 +25,12 @@ import '@/permission' // permission control
  * Currently MockJs will be used in the production environment,
  * please remove it before going online ! ! !
  */
+
+import * as filters from './filters' // global filters
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
+
 if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
   mockXHR()
