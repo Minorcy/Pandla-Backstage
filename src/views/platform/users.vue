@@ -208,11 +208,6 @@ export default {
         sort: "esc",
         status: 2
       },
-      pageparm: {
-        currentPage: 1,
-        pageSize: 10,
-        total: 10
-      },
       options: [
         {
           value: "id",
@@ -300,7 +295,7 @@ export default {
         });
         return;
       }
-      // this.userData = [];
+      this.userData = [];
       this.loading = true;
       this.hidden = true;
       searchUsers(this.inputValue)

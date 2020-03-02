@@ -77,9 +77,7 @@ export default {
     handleSizeChange(val) {
       this.$emit("pagination", {
         page: this.currentPage,
-        rows: val,
-        sidx: "id",
-        sort: "esc"
+        rows: val
       });
       if (this.autoScroll) {
         scrollTo(0, 800);
@@ -88,9 +86,7 @@ export default {
     handleCurrentChange(val) {
       this.$emit("pagination", {
         page: val,
-        rows: this.pageSize,
-        sidx: "id",
-        sort: "esc"
+        rows: this.pageSize
       });
       if (this.autoScroll) {
         scrollTo(0, 800);
