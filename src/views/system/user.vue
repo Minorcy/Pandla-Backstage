@@ -8,13 +8,6 @@
         icon="el-icon-edit"
         @click="handleCreate"
       >添加</el-button>
-      <el-button
-        class="filter-item"
-        style="margin-left: 10px;"
-        type="primary"
-        icon="el-icon-edit"
-        @click="handleCreate"
-      >删除</el-button>
     </div>
     <el-table
       v-loading="listLoading"
@@ -176,10 +169,18 @@ export default {
         addUser(userDate).then(response => {
           // console.log(response)
           // this.list.push(this.form);
+          this.$message({
+              type: "success",
+              message: response.msg
+            });
           this.fetchData()
         });
       } else {
         updateUser(userDate).then(response => {
+          this.$message({
+              type: "success",
+              message: response.msg
+            });
           this.list[this.currentIndex] = userDate;
         });
       }

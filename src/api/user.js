@@ -13,7 +13,6 @@ export function getInfo(token) {
     url: '/web/admin/info',
     method: 'get',
     data: token
-     
   })
 }
 

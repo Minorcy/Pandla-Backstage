@@ -106,7 +106,7 @@ import Pagination from "@/components/Pagination";
 
 import {
   getInviteList,
- getUserForce
+  queryInvite
 } from "@/api/platform";
 export default {
   data() {
@@ -185,10 +185,9 @@ export default {
         });
         return;
       }
-      this.forceData = [];
       this.loading = true;
       this.hidden = true;
-      getUserForce(this.inputValue)
+      queryInvite(this.listQuery,this.inputValue)
         .then(res => {
           this.$message({
             message: res.msg,

@@ -1,115 +1,176 @@
 <template>
-  <el-table
-    :data="tableData"
-    style="width: 100%">
-    <el-table-column type="expand">
-      <template slot-scope="props">
-        <el-form label-position="left" inline class="demo-table-expand">
-          <el-form-item label="商品名称">
-            <span>{{ props.row.name }}</span>
+  <div class="app-container">
+    <div class="filter-container">
+      <el-button
+        class="filter-item"
+        style="margin-left: 10px;"
+        type="primary"
+        icon="el-icon-edit"
+        @click="handleCreate"
+      >添加</el-button>
+      <el-table
+        v-loading="listLoading"
+        :data="forceList"
+        element-loading-text="Loading"
+        highlight-current-row
+      >
+        <el-table-column align="center" label="ID" width="95">
+          <template slot-scope="scope">{{ scope.row.id }}</template>
+        </el-table-column>
+        <el-table-column label="任务名" width="200" align="center">
+          <template slot-scope="scope">
+            <span>{{ scope.row.name }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="奖励" width="110" align="center">
+          <template slot-scope="scope">
+            <span>{{ scope.row.number }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="250" align="center">
+          <template slot-scope="scope">
+            <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-dialog title="用户信息" :visible.sync="dialogFormVisible">
+        <!-- 在el-dialog中进行嵌套el-form实现弹出表格的效果 -->
+        <el-form :model="form">
+          <el-form-item label="id" :label-width="formLabelWidth">
+            <el-input v-model="form.id" auto-complete="off" disabled></el-input>
           </el-form-item>
-          <el-form-item label="所属店铺">
-            <span>{{ props.row.shop }}</span>
+          <el-form-item label="任务名" :label-width="formLabelWidth">
+            <el-input v-model="form.name" auto-complete="off"></el-input>
           </el-form-item>
-          <el-form-item label="商品 ID">
-            <span>{{ props.row.id }}</span>
-          </el-form-item>
-          <el-form-item label="店铺 ID">
-            <span>{{ props.row.shopId }}</span>
-          </el-form-item>
-          <el-form-item label="商品分类">
-            <span>{{ props.row.category }}</span>
-          </el-form-item>
-          <el-form-item label="店铺地址">
-            <span>{{ props.row.address }}</span>
-          </el-form-item>
-          <el-form-item label="商品描述">
-            <span>{{ props.row.desc }}</span>
+          <el-form-item label="奖励" :label-width="formLabelWidth">
+            <el-input v-model="form.number" auto-complete="off"></el-input>
           </el-form-item>
         </el-form>
-      </template>
-    </el-table-column>
-    <el-table-column
-      label="商品 ID"
-      prop="id">
-    </el-table-column>
-    <el-table-column
-      label="商品名称"
-      prop="name">
-    </el-table-column>
-    <el-table-column
-      label="描述"
-      prop="desc">
-    </el-table-column>
-     <el-table-column
-      label="操作"
-      prop="desc">
-      <template slot-scope="scope">
-        <el-button
-          size="mini"
-          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-        <el-button
-          size="mini"
-          type="danger"
-          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="cancel">取 消</el-button>
+          <!-- 设置触发更新的方法 -->
+          <el-button type="primary" @click="update">确 定</el-button>
+        </div>
+      </el-dialog>
+    </div>
+  </div>
 </template>
 
-<style>
-  .demo-table-expand {
-    font-size: 0;
-  }
-  .demo-table-expand label {
-    width: 90px;
-    color: #99a9bf;
-  }
-  .demo-table-expand .el-form-item {
-    margin-right: 0;
-    margin-bottom: 0;
-    width: 50%;
-  }
-</style>
-
 <script>
-  export default {
-    data() {
-      return {
-        tableData: [{
-          id: '12987122',
-          name: '好滋好味鸡蛋仔',
-          category: '江浙小吃、小吃零食',
-          desc: '荷兰优质淡奶，奶香浓而不腻',
-          address: '上海市普陀区真北路',
-          shop: '王小虎夫妻店',
-          shopId: '10333'
-        }, {
-          id: '12987123',
-          name: '好滋好味鸡蛋仔',
-          category: '江浙小吃、小吃零食',
-          desc: '荷兰优质淡奶，奶香浓而不腻',
-          address: '上海市普陀区真北路',
-          shop: '王小虎夫妻店',
-          shopId: '10333'
-        }, {
-          id: '12987125',
-          name: '好滋好味鸡蛋仔',
-          category: '江浙小吃、小吃零食',
-          desc: '荷兰优质淡奶，奶香浓而不腻',
-          address: '上海市普陀区真北路',
-          shop: '王小虎夫妻店',
-          shopId: '10333'
-        }, {
-          id: '12987126',
-          name: '好滋好味鸡蛋仔',
-          category: '江浙小吃、小吃零食',
-          desc: '荷兰优质淡奶，奶香浓而不腻',
-          address: '上海市普陀区真北路',
-          shop: '王小虎夫妻店',
-          shopId: '10333'
-        }]
-      }
+import { getTaskList, addTask, deleteTask, updateTask } from "@/api/internal";
+import { getToken } from "@/utils/auth.js";
+
+export default {
+  filters: {
+    statusFilter(status) {
+      const statusMap = {
+        published: "success",
+        draft: "gray",
+        deleted: "danger"
+      };
+      return statusMap[status];
     }
+  },
+  data() {
+    return {
+      forceList: null,
+      listLoading: true,
+      dialogFormVisible: false,
+      form: {},
+      roleList: null,
+      currentIndex: "",
+      formLabelWidth: "80px",
+      add: false
+    };
+  },
+  created() {
+    this.fetchData();
+  },
+  methods: {
+    fetchData() {
+      this.listLoading = true;
+      getTaskList().then(response => {
+        // console.log(response);
+        this.forceList = response.data.ylList;
+        this.listLoading = false;
+      });
+    },
+    handleEdit(index, row) {
+      this.add = false;
+      this.form = this.forceList[index];
+      (this.dialogFormVisible = true), (this.currentIndex = index);
+    },
+    handleDelete(index, row) {
+      this.$confirm("永久删除该数据, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          deleteTask(row.id, 2).then(response => {
+            // console.log(response);
+            // 移除对应索引位置的数据，可以对row进行设置向后台请求删除数据
+            this.forceList.splice(index, 1);
+            this.$message({
+              type: "success",
+              message: "删除成功!"
+            });
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    },
+    update() {
+      var data = this.form;
+      data.status = 2;
+      if (this.add) {
+        addTask(data).then(response => {
+          this.$message({
+            type: "success",
+            message: response.msg
+          });
+          this.fetchData();
+        });
+      } else {
+        updateTask(data).then(response => {
+          this.$message({
+            type: "success",
+            message: response.msg
+          });
+          this.fetchData();
+        });
+      }
+      this.add = false;
+      this.dialogFormVisible = false;
+    },
+    cancel() {
+      // 取消的时候直接设置对话框不可见即可
+      this.dialogFormVisible = false;
+    },
+    handleCreate() {
+      this.form = {
+        id: "",
+        name: "",
+        number: ""
+      };
+      //   设置点击按钮之后进行显示对话框
+      this.dialogFormVisible = true;
+      this.add = true;
+    }
+  },
+  roleInfo(id) {
+    console.log(id);
   }
+};
 </script>
+
+<style lang="scss" scoped>
+.filter-container {
+  margin: 10px;
+}
+</style>

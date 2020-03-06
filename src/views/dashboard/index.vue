@@ -96,7 +96,8 @@ import {
   getHomeData,
   getlineChartData,
   getRewardData,
-  getNodeData
+  getNodeData,
+  getPopupData
 } from "@/api/dashboard";
 
 export default {

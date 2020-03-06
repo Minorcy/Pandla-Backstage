@@ -27,3 +27,11 @@ export function getNodeData() {
       method: 'get',
     })
 }
+
+
+export function getPopupData() {
+  return request({
+    url: '/web/homePage/popup',
+    method: 'get',
+  })
+}

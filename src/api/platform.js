@@ -112,21 +112,21 @@ export function getReportList(data){
 
 export function reviewReport(id,status){ 
   return request({
-    url: `/web/pan/unfreezeUserPan?id=${id}&status=${status}`,
+    url: `/web/report/approve?id=${id}&status=${status}`,
     method: 'post'
   })
 }
 
 export function confirmDelete(did){ 
   return request({
-    url: `/web/pan/deleteDyn/${did}`,
+    url: `/web/report/deleteDyn/${did}`,
     method: 'post'
   })
 }
 
 export function deleteReport(did){ 
   return request({
-    url: `/web/pan/deleteDyn?did=${did}`,
+    url: `/web/report/deleteReportByIds?did=${did}`,
     method: 'post'
   })
 }

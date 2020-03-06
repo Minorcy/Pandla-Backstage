@@ -58,71 +58,6 @@ export const constantRoutes = [{
     }]
   },
 
-  {
-    path: '/system',
-    component: Layout,
-    redirect: '/system/user',
-    name: 'System',
-    meta: {
-      title: '系统功能',
-      icon: 'example'
-    },
-    children: [{
-        path: 'user',
-        name: 'User',
-        component: () => import('@/views/system/user'),
-        meta: {
-          title: '用户管理',
-          icon: 'table'
-        }
-      },
-      {
-        path: 'role',
-        name: 'Role',
-        component: () => import('@/views/system/role'),
-        meta: {
-          title: '角色管理',
-          icon: 'table'
-        }
-      },
-      {
-        path: 'authority',
-        name: 'Authority',
-        component: () => import('@/views/system/authority'),
-        meta: {
-          title: '权限管理',
-          icon: 'table'
-        }
-      },
-      {
-        path: 'dictionary',
-        name: 'Dictionary',
-        component: () => import('@/views/system/dictionary'),
-        meta: {
-          title: '字典管理',
-          icon: 'table'
-        }
-      },
-      {
-        path: 'token',
-        name: 'Token',
-        component: () => import('@/views/system/token'),
-        meta: {
-          title: 'token管理',
-          icon: 'table'
-        }
-      },
-      {
-        path: 'transfer',
-        name: 'Transfer',
-        component: () => import('@/views/system/transfer'),
-        meta: {
-          title: '转账管理',
-          icon: 'table'
-        }
-      }
-    ]
-  },
 
   {
     path: '/platform',
@@ -131,7 +66,7 @@ export const constantRoutes = [{
     name: 'platform',
     meta: {
       title: '平台管理',
-      icon: 'example'
+      icon: 'platform'
     },
     children: [{
       path: 'users',
@@ -139,7 +74,7 @@ export const constantRoutes = [{
       component: () => import('@/views/platform/users'),
       meta: {
         title: '用户列表',
-        icon: 'form'
+        icon: 'user'
       }
     }, {
       path: 'log',
@@ -147,7 +82,7 @@ export const constantRoutes = [{
       component: () => import('@/views/platform/log'),
       meta: {
         title: '日志列表',
-        icon: 'form'
+        icon: 'clipboard'
       }
     }, {
       path: 'pan',
@@ -155,7 +90,7 @@ export const constantRoutes = [{
       component: () => import('@/views/platform/pan'),
       meta: {
         title: '用户pan',
-        icon: 'form'
+        icon: 'money'
       }
     }, {
       path: 'force',
@@ -163,7 +98,7 @@ export const constantRoutes = [{
       component: () => import('@/views/platform/force'),
       meta: {
         title: '用户原力',
-        icon: 'form'
+        icon: 'example'
       }
     }, {
       path: 'report',
@@ -171,7 +106,7 @@ export const constantRoutes = [{
       component: () => import('@/views/platform/report'),
       meta: {
         title: '举报处理',
-        icon: 'form'
+        icon: 'report'
       }
     }, {
       path: 'invited',
@@ -179,7 +114,7 @@ export const constantRoutes = [{
       component: () => import('@/views/platform/invited'),
       meta: {
         title: '邀请记录',
-        icon: 'form'
+        icon: 'invited'
       }
     }]
   },
@@ -191,7 +126,7 @@ export const constantRoutes = [{
     name: 'announcement',
     meta: {
       title: '内容管理',
-      icon: 'nested'
+      icon: 'internal'
     },
     children: [{
         path: 'announcement',
@@ -199,7 +134,7 @@ export const constantRoutes = [{
         name: 'Announcement',
         meta: {
           title: '公告列表',
-          icon: 'form'
+          icon: 'announcement'
         }
       },
       {
@@ -208,7 +143,7 @@ export const constantRoutes = [{
         name: 'Pan Task',
         meta: {
           title: 'pan任务',
-          icon: 'form'
+          icon: 'pan-task'
         }
       },
       {
@@ -217,7 +152,16 @@ export const constantRoutes = [{
         name: 'Force Task',
         meta: {
           title: '原力任务',
-          icon: 'form'
+          icon: 'force-task'
+        }
+      },
+      {
+        path: 'invitation-poster',
+        component: () => import('@/views/internal/invitation-poster'), // Parent router-view
+        name: 'Invitation Poster',
+        meta: {
+          title: '邀请海报',
+          icon: 'poster'
         }
       },
       {
@@ -226,7 +170,7 @@ export const constantRoutes = [{
         name: 'Planet Convention',
         meta: {
           title: '星球公约',
-          icon: 'form'
+          icon: 'planet'
         }
       },
       {
@@ -235,7 +179,7 @@ export const constantRoutes = [{
         name: 'Welfare',
         meta: {
           title: '公益活动',
-          icon: 'form'
+          icon: 'welfare'
         }
       },
       {
@@ -244,7 +188,7 @@ export const constantRoutes = [{
         name: 'Official Push',
         meta: {
           title: '官方消息推送',
-          icon: 'form'
+          icon: 'push'
         }
       },
     ]
@@ -256,7 +200,7 @@ export const constantRoutes = [{
     name: 'organization',
     meta: {
       title: '组织管理',
-      icon: 'nested'
+      icon: 'tree'
     },
     children: [{
         path: 'publication',
@@ -264,7 +208,7 @@ export const constantRoutes = [{
         name: 'Publication',
         meta: {
           title: '公益组织',
-          icon: 'form'
+          icon: 'publication'
         }
       },
       {
@@ -273,7 +217,7 @@ export const constantRoutes = [{
         name: 'Bar',
         meta: {
           title: '酒吧管理',
-          icon: 'form'
+          icon: 'bar'
         }
       },
       {
@@ -282,7 +226,7 @@ export const constantRoutes = [{
         name: 'Ixx',
         meta: {
           title: 'ixx',
-          icon: 'form'
+          icon: 'ixx'
         }
       },
       {
@@ -291,7 +235,7 @@ export const constantRoutes = [{
         name: 'Fund Pool',
         meta: {
           title: '公益基金',
-          icon: 'form'
+          icon: 'fund-pool'
         }
       },
     ]
@@ -299,19 +243,27 @@ export const constantRoutes = [{
   {
     path: '/advertising',
     component: Layout,
-    redirect: '/advertising/index',
+    redirect: '/advertising/advertising-list',
     name: 'Advertising',
     meta: {
       title: '广告管理',
-      icon: 'nested'
+      icon: 'advertising'
     },
     children: [{
-      path: 'index',
-      component: () => import('@/views/advertising/index'), // Parent router-view
-      name: 'Index',
+      path: 'advertising-list',
+      component: () => import('@/views/advertising/advertising-list'), // Parent router-view
+      name: 'Advertising List',
       meta: {
-        title: '广告内容',
-        icon: 'form'
+        title: '广告列表',
+        icon: 'advertising-list'
+      }
+    },{
+      path: 'advertising-type',
+      component: () => import('@/views/advertising/advertising-type'), // Parent router-view
+      name: 'Advertising Type',
+      meta: {
+        title: '广告类型',
+        icon: 'advertising-type'
       }
     }]
   },
@@ -333,6 +285,82 @@ export const constantRoutes = [{
     redirect: '/404',
     hidden: true
   }
+]
+
+export const asyncRoutes=[
+  {
+    path: '/system',
+    component: Layout,
+    redirect: '/system/user',
+    name: 'System',
+    
+    meta: {
+      title: '系统功能',
+      icon: 'component',
+      role: ['admin'] 
+    },
+    children: [{
+        path: 'user',
+        name: 'User',
+        component: () => import('@/views/system/user'),
+        meta: {
+          title: '用户管理',
+          icon: 'peoples',
+          roles: ['admin']
+        }
+      },
+      {
+        path: 'role',
+        name: 'Role',
+        component: () => import('@/views/system/role'),
+        meta: {
+          title: '角色管理',
+          icon: 'role',
+          roles: ['admin']
+        }
+      },
+      {
+        path: 'authority',
+        name: 'Authority',
+        component: () => import('@/views/system/authority'),
+        meta: {
+          title: '权限管理',
+          icon: 'authority',
+          roles: ['admin']
+        }
+      },
+      {
+        path: 'dictionary',
+        name: 'Dictionary',
+        component: () => import('@/views/system/dictionary'),
+        meta: {
+          title: '字典管理',
+          icon: 'dictionary',
+          roles: ['admin']
+        }
+      },
+      {
+        path: 'token',
+        name: 'Token',
+        component: () => import('@/views/system/token'),
+        meta: {
+          title: 'token管理',
+          icon: 'token',
+          roles: ['admin']
+        }
+      },
+      {
+        path: 'transfer',
+        name: 'Transfer',
+        component: () => import('@/views/system/transfer'),
+        meta: {
+          title: '转账管理',
+          icon: 'transfer',
+          roles: ['admin']
+        }
+      }
+    ]
+  },
 ]
 
 const createRouter = () => new Router({

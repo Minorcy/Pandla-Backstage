@@ -8,13 +8,6 @@
         icon="el-icon-edit"
         @click="handleCreate"
       >添加</el-button>
-      <el-button
-        class="filter-item"
-        style="margin-left: 10px;"
-        type="primary"
-        icon="el-icon-edit"
-        @click="handleCreate"
-      >删除</el-button>
     </div>
     <el-table
       v-loading="listLoading"
@@ -36,7 +29,7 @@
           <span>{{ scope.row.permission }}</span>
         </template>
       </el-table-column>
-       
+
       <el-table-column label="操作" width="250" align="center">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -45,16 +38,19 @@
       </el-table-column>
     </el-table>
     <el-dialog title="用户信息" :visible.sync="dialogFormVisible">
-      
       <el-form :model="form">
         <el-form-item label="id" :label-width="formLabelWidth">
-          <el-input v-model="form.id" auto-complete="off"  :disabled="add"></el-input>
+          <el-input v-model="form.id" auto-complete="off" :disabled="add"></el-input>
         </el-form-item>
         <el-form-item label="名字" :label-width="formLabelWidth">
           <el-input v-model="form.name" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="权限" :label-width="formLabelWidth">
-          <el-checkbox-group  v-model="checkedPermission" @change="checkboxChange" v-if="dialogFormVisible">
+          <el-checkbox-group
+            v-model="checkedPermission"
+            @change="checkboxChange"
+            v-if="dialogFormVisible"
+          >
             <el-checkbox
               v-for="(item,index) in permissionList"
               :label="item.id"
@@ -65,12 +61,10 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancel">取 消</el-button>
-     
+
         <el-button type="primary" @click="update">确 定</el-button>
       </div>
     </el-dialog>
-
-   
   </div>
 </template>
 
@@ -108,7 +102,7 @@ export default {
       formLabelWidth: "80px",
       add: false,
       checkedPermission: [],
-      checkedPermissionOptions:""
+      checkedPermissionOptions: ""
     };
   },
   created() {
@@ -127,11 +121,11 @@ export default {
       });
     },
     handleEdit(index, row) {
-      this.add = false
+      this.add = false;
       var str = row.permission;
       if (row.permission) {
         this.checkedPermission = str.split(",");
-        this.checkedPermission = this.checkedPermission.map(Number)
+        this.checkedPermission = this.checkedPermission.map(Number);
       } else {
         this.checkedPermission = [];
       }
@@ -164,18 +158,24 @@ export default {
     update() {
       // var userDate = JSON.parse(JSON.stringify(this.form));
       // userDate.permission = this.checkedPermissionOptions
-      this.form.permission= this.checkedPermissionOptions
-      console.log(this.form)
+      this.form.permission = this.checkedPermissionOptions;
+      console.log(this.form);
       if (this.add) {
-        addRole( this.form).then(response => {
-          // console.log(response)
-          // this.list.push(this.form);
+        addRole(this.form).then(response => {
+          this.$message({
+            type: "success",
+            message: response.msg
+          });
           this.fetchData();
         });
       } else {
-        updateRole( this.form).then(response => {
-          this.list[this.currentIndex] =  this.form.permission;
-          console.log(this.list)
+        updateRole(this.form).then(response => {
+          this.list[this.currentIndex] = this.form.permission;
+          this.$message({
+            type: "success",
+            message: response.msg
+          });
+          // console.log(this.list)
         });
       }
       this.add = false;
@@ -186,7 +186,7 @@ export default {
       this.dialogFormVisible = false;
     },
     handleCreate() {
-      this.checkedPermission =[]
+      this.checkedPermission = [];
       this.form = {
         id: "",
         name: "",
@@ -197,7 +197,7 @@ export default {
       this.add = true;
     },
     checkboxChange(data) {
-      this.checkedPermissionOptions = data.toString()
+      this.checkedPermissionOptions = data.toString();
     }
   }
 };

@@ -8,13 +8,6 @@
         icon="el-icon-edit"
         @click="handleCreate"
       >添加</el-button>
-      <el-button
-        class="filter-item"
-        style="margin-left: 10px;"
-        type="primary"
-        icon="el-icon-edit"
-        @click="handleCreate"
-      >删除</el-button>
     </div>
 
     <el-row :gutter="8">
@@ -177,7 +170,6 @@ export default {
             } else {
               this.ylList.splice(index, 1);
             }
-            this.list.splice(index, 1);
             this.$message({
               type: "success",
               message: "删除成功!"
@@ -196,10 +188,18 @@ export default {
       if (this.add) {
         addDictn(this.form).then(response => {
           this.fetchData();
+          this.$message({
+              type: "success",
+              message: response.msg
+            });
         });
       } else {
         updateDict(this.form).then(response => {
          this.fetchData();
+         this.$message({
+              type: "success",
+              message: response.msg
+            });
         });
       }
       this.add = false;
