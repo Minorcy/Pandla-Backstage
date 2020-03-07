@@ -137,7 +137,7 @@
       :hidden="hidden"
       @pagination="getdata"
     />
-    <el-dialog title="审核举报" :visible.sync="dialogVisible" width="30%" :before-close="handleClose" >
+    <el-dialog title="审核举报" :visible.sync="dialogVisible" width="30%" :before-close="handleClose">
       <el-form :model="form" label-position="right">
         <el-form-item label="是否通过:" :rules="[
       { required: true, message: '请选择'}]">
@@ -225,7 +225,8 @@ export default {
         status: "",
         delete: "",
         index: "",
-        id: ""
+        id: "",
+        did: ""
       }
     };
   },
@@ -276,9 +277,10 @@ export default {
       this.dialogVisible = true;
       this.form.index = index;
       this.form.id = row.id;
+      this.form.did = row.did;
     },
     deleteReport(index, row) {
-      deleteReport(row.did).then(response => {
+      deleteReport(row.id).then(response => {
         this.reportList.splice(index, 1);
         this.$message({
           type: "success",
@@ -303,7 +305,7 @@ export default {
       });
       this.dialogVisible = false;
       if (this.form.delete == 1) {
-        confirmDelete(this.form.id).then(response => {});
+        confirmDelete(this.form.did).then(response => {});
       }
     },
     handleClose() {
@@ -312,7 +314,8 @@ export default {
         status: "",
         delete: "",
         index: "",
-        id: ""
+        id: "",
+        did: ""
       };
     },
     cancel() {
@@ -321,7 +324,8 @@ export default {
         status: "",
         delete: "",
         index: "",
-        id: ""
+        id: "",
+        did: ""
       };
     }
   }

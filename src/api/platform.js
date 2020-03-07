@@ -142,7 +142,7 @@ export function getInviteList(data){
 
 export function queryInvite(data,account){ 
   return request({
-    url: `/web/inv/list?account=${account}`,
+    url: `/web/inv/queryInvByAccount?account=${account}`,
     method: 'post',
     data
   })

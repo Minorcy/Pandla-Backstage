@@ -1,7 +1,12 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+import {
+  MessageBox,
+  Message
+} from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import {
+  getToken
+} from '@/utils/auth'
 
 // create an axios instance
 const service = axios.create({
@@ -35,7 +40,7 @@ service.interceptors.response.use(
   /**
    * If you want to get http information such as headers or status
    * Please return  response => response
-  */
+   */
 
   /**
    * Determine the request status by custom code
@@ -45,11 +50,11 @@ service.interceptors.response.use(
   response => {
     // console.log(response)
     const res = response.data
-    
+
     // if the custom code is not 20000, it is judged as an error.
-   
+
     if (res.errcode != 200) {
-      
+
       Message({
         message: res.msg || 'Error',
         type: 'error',
@@ -80,21 +85,30 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log(error.response) // for debug
-    if(error.response.status == 401){
+    console.log(error) // for debug
+    if (error.response.status == 401) {
       Message({
-        message: "登入失效，请重新登入",
+        message: "权限不足",
         type: 'error',
         duration: 5 * 1000
       })
-    }else{
+    } else if (error.response.status == 403) {
+      MessageBox.confirm('登入已失效，请重新登入', " 已注销", {
+        confirmButtonText: '重新登入',
+        type: 'warning'
+      }).then(() => {
+        store.dispatch('user/resetToken').then(() => {
+          location.reload()
+        })
+      })
+    } else {
       Message({
         message: error.response.data.msg || error.message,
         type: 'error',
         duration: 5 * 1000
       })
     }
-   
+
     return Promise.reject(error)
   }
 )

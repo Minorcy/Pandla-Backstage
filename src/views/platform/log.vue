@@ -45,6 +45,7 @@
       v-loading="loading"
       border
       element-loading-text="loading"
+      style="width:1262px"
     >
       <el-table-column align="center" label="编号" width="80">
         <template slot-scope="scope">

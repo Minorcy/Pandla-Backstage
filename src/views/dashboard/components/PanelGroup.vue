@@ -34,7 +34,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            在线用户
+            今日活跃
           </div>
           <count-to :start-val="0" :end-val="homeData.online_user" :duration="3600" class="card-panel-num" />
         </div>
@@ -47,7 +47,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">
-            pan数量
+            Pan数量
           </div>
           <count-to :start-val="0" :end-val="homeData.pan_count" :duration="3200" class="card-panel-num" />
         </div>

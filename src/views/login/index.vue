@@ -136,7 +136,8 @@ export default {
               setTimeout(() => {
                 getPopupData().then(response => {
                   this.$alert(response.data, "消息提醒", {
-                    confirmButtonText: "确定"
+                    confirmButtonText: "确定",
+                    type: 'warning ',
                   });
                 });
               }, 1000);
@@ -229,8 +230,9 @@ $light_gray: #eee;
     position: relative;
     width: 520px;
     max-width: 100%;
+    height: 100%;
     padding: 160px 35px 0;
-    margin: 0 auto;
+    margin: 100px auto;
     overflow: hidden;
   }
 
@@ -275,5 +277,8 @@ $light_gray: #eee;
     cursor: pointer;
     user-select: none;
   }
+}
+.el-message-box__content{
+  color: #e6a23c;
 }
 </style>

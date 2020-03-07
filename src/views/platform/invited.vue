@@ -24,7 +24,7 @@
       <!-- <span class="lift">
         <i class="el-icon-caret-top lift-icon" :class="[sort?'color':'']" @click="chengSort"></i>
         <i class="el-icon-caret-bottom lift-icon" :class="[!sort?'color':'']" @click="chengSort"></i>
-      </span> -->
+      </span>-->
 
       <el-input placeholder="请输入搜索账号" v-model="inputValue" size="medium" clearable class="input"></el-input>
       <el-button class="button" size="small" type="primary" icon="el-icon-search" @click="search">搜索</el-button>
@@ -85,7 +85,7 @@
           <el-button size="mini" type="danger" @click="freezeUserPan(scope.$index, scope.row)">冻结</el-button>
           <el-button size="mini" type="warning" @click="unfreezeUserPan(scope.$index, scope.row)">解冻</el-button>
         </template>
-      </el-table-column> -->
+      </el-table-column>-->
     </el-table>
     <!-- 分页组件 -->
     <pagination
@@ -104,10 +104,7 @@
 
 import Pagination from "@/components/Pagination";
 
-import {
-  getInviteList,
-  queryInvite
-} from "@/api/platform";
+import { getInviteList, queryInvite } from "@/api/platform";
 export default {
   data() {
     return {
@@ -116,13 +113,13 @@ export default {
       // 请求数据参数
       formInline: {},
       //用户数据
-      invList:[],
+      invList: [],
       // 分页参数
       total: 10,
       listQuery: {
         page: 0,
         rows: 20,
-        sort: "esc",
+        sort: "esc"
       },
       options: [
         {
@@ -160,18 +157,34 @@ export default {
   methods: {
     // 获取数据方法
     getdata(parameter) {
-      parameter.sort = this.optionsValue
+      parameter.sort = this.optionsValue;
       this.hidden = false;
       this.loading = true;
       setTimeout(() => {
         this.loading = false;
       }, 1.5 * 1000);
-      getInviteList(parameter).then(response=>{
-        console.log(response)
+      if(this.inputValue){
+        queryInvite(parameter,this.inputValue).then(response=>{
+          this.$message({
+            message: res.msg,
+            type: "success"
+          });
+          this.loading = false;
+          this.total = res.data.count;
+          if(this.total<20){
+            this.hidden = true;
+          }
+          this.invList = res.data.invList;
+        })
+      }else{
+         getInviteList(parameter).then(response => {
+        console.log(response);
         this.loading = false;
         this.total = response.data.count;
         this.invList = response.data.invList;
-        })
+      });
+      }
+     
     },
 
     // 分页插件事件
@@ -185,17 +198,19 @@ export default {
         });
         return;
       }
-      this.loading = true;
-      this.hidden = true;
-      queryInvite(this.listQuery,this.inputValue)
+      this.loading = true; 
+      queryInvite(this.listQuery, this.inputValue)
         .then(res => {
           this.$message({
             message: res.msg,
             type: "success"
           });
           this.loading = false;
-          this.total = 1;
-          this.forceData.push(res.data);
+          this.total = res.data.count;
+          if(this.total<20){
+            this.hidden = true;
+          }
+          this.invList = res.data.invList;
         })
         .catch(error => {
           this.getdata(this.listQuery);
@@ -203,8 +218,7 @@ export default {
     },
     selectChange(value) {
       this.getdata(this.listQuery);
-    },
-    
+    }
   },
   filters: {
     getFloat(number) {

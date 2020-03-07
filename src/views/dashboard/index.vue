@@ -64,12 +64,12 @@
               <span>{{ scope.row.id }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="账号" align="center">
+          <el-table-column label="节点账号" align="center">
             <template slot-scope="scope">
               <span>{{ scope.row.account }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="名字" align="center">
+          <el-table-column label="节点名字" align="center">
             <template slot-scope="scope">
               <span>{{ scope.row.name }}</span>
             </template>

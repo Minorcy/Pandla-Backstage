@@ -89,7 +89,7 @@ export const constantRoutes = [{
       name: 'Pan',
       component: () => import('@/views/platform/pan'),
       meta: {
-        title: '用户pan',
+        title: '用户Pan',
         icon: 'money'
       }
     }, {
@@ -142,7 +142,7 @@ export const constantRoutes = [{
         component: () => import('@/views/internal/pan-task'), // Parent router-view
         name: 'Pan Task',
         meta: {
-          title: 'pan任务',
+          title: 'Pan任务',
           icon: 'pan-task'
         }
       },

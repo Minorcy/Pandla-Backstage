@@ -132,7 +132,7 @@
           <div>{{scope.row.createTime |parseTime('{y}-{m}-{d} {h}:{i}')}}</div>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="最后上线时间" width="120">
+      <el-table-column align="center" label="最后登入时间" width="120">
         <template slot-scope="scope">
           <div>{{scope.row.loginTime | parseTime('{y}-{m}-{d} {h}:{i}')}}</div>
         </template>
