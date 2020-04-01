@@ -226,7 +226,7 @@ export default {
       }
 
       this.loading = true;
-      this.hidden = true;
+   
 
       getDynList(searchData)
         .then(res => {
@@ -235,7 +235,7 @@ export default {
             type: "success"
           });
           this.loading = false;
-          // this.total = 1;
+          this.total = res.data.count;
           this.dynList = res.data.dynList;
         })
         .catch(error => {
